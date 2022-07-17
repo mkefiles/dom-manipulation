@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Simple To-Do List</title>
+        <style>
+            /* CSS */
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: hotpink;
+            }
+            #toDo{
+                width: 100vw;
+                position: fixed;
+                top: 225px;
+                left: 0px;
+            }
+            .toDo__container{
+                background-color: beige;
+                border: 1px solid grey;
+                border-radius: 15px;
+                width: 50%;
+                margin: 0 auto;
+                padding: 10px 10px 10px 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .toDo__text{
+                width: 75%;
+            }
+            .toDo__text > input{
+                width: 95%;
+            }
+            .toDo__button{
+                width: 25%;
+            }
+            .toDo__button > button{
+                width: 95%;
+            }
+
+            #taskList{
+                width: 100vw;
+                position: fixed;
+                top: 285px;
+                left: 0px;
+            }
+            .taskList__container{
+                background-color: beige;
+                border: 1px solid grey;
+                border-radius: 15px;
+                width: 50%;
+                margin: 0 auto;
+                padding: 10px 10px 10px 10px;
+                display: flex;
+                flex-direction: column;
+            }
+            .hidden{
+                display: none;
+            }
+            .taskList__task{
+                padding: 10px 0px 10px 0px;
+            }
+            .taskList__text{
+                float: left;
+                font-size: 1.2rem;
+                padding-top: 2px;
+            }
+            .strikethrough{
+                text-decoration: line-through;
+            }
+            .taskList__done, .taskList__delete{
+                float: right;
+                font-size: 1.4rem;
+            }
+            .taskList__done:hover{
+                color: green;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            .taskList__delete:hover{
+                color: red;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HTML -->
+        <section id="toDo">
+            <div class="toDo__container">
+                <div class="toDo__text">
+                    <input id="textField" type="text" placeholder="Enter task...">
+                </div>
+                <div class="toDo__button">
+                    <button id="addTask">+</button>
+                </div>
+            </div>
+        </section>
+        <section id="taskList">
+            <!-- Dynamically Added Tasks Go In taskContainer -->
+            <!-- Do NOT add spaces or comments in DIV as that will break the logic -->
+            <div id="taskContainer" class="taskList__container hidden"></div>
+        </section>
+        <script>
+            // JS
+            let textField = document.getElementById("textField");
+            let addTask = document.getElementById("addTask");
+            let taskContainer = document.getElementById("taskContainer");
+            let completeBtns;
+            let deleteBtns;
+
+            function createTask(){
+                // create the task task-surrounding div
+                let taskEntry = document.createElement("div");
+                taskEntry.classList.add("taskList__task");
+                taskContainer.appendChild(taskEntry);
+
+                // create the task itself
+                let taskText = document.createElement("span");
+                taskText.classList.add("taskList__text");
+                taskText.innerText = textField.value;
+                taskEntry.appendChild(taskText);
+
+                // add the delete button
+                let taskDelete = document.createElement("span");
+                taskDelete.classList.add("taskList__delete");
+                taskDelete.innerHTML = "&#9746;";
+                taskEntry.appendChild(taskDelete);
+
+                // add the complete/incomplete button
+                let taskDone = document.createElement("span");
+                taskDone.classList.add("taskList__done");
+                taskDone.innerHTML = "&#9745;";
+                taskEntry.appendChild(taskDone);
+
+                // keep the task-list hidden until a task is present
+                if (taskContainer.childNodes.length != 0){
+                    taskContainer.classList.remove("hidden");
+                }
+
+                // reset the text-field back to an empty value
+                textField.value = "";
+
+                // get updated list of tasks (and their buttons)
+                completeBtns = document.getElementsByClassName("taskList__done");
+                deleteBtns = document.getElementsByClassName("taskList__delete");
+                
+                for (let i = 0; i < completeBtns.length; i++){
+                    // you need to delete all event-listeners because they keep adding up
+                    completeBtns[i].removeEventListener("click",toggleTaskStatus);
+                    completeBtns[i].addEventListener("click", toggleTaskStatus);
+                }
+                
+                for (let j = 0; j < deleteBtns.length; j++){
+                    // you need to delete all event-listeners because they keep adding up
+                    deleteBtns[j].removeEventListener("click",removeTask);
+                    deleteBtns[j].addEventListener("click", removeTask);
+                }                
+            }
+
+            // apply strike-through to selected element
+            function toggleTaskStatus(){
+                this.parentElement.firstChild.classList.toggle("strikethrough");
+            }
+
+            // delete the selected element
+            function removeTask(){
+                this.parentElement.remove();
+                if (taskContainer.childNodes.length == 0){
+                    taskContainer.classList.add("hidden");
+                }
+            }
+
+            // create a new task
+            addTask.addEventListener("click", createTask);
+        </script>
+    </body>
+</html>

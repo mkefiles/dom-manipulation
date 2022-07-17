@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>FAQ Section</title>
+        <style>
+            /* CSS */
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: rgb(143, 176, 199);
+            }
+            #FAQ{
+                width: 100%;
+                position: fixed;
+                top: 175px;
+                left: 0px;
+            }
+            .FAQ__container{
+                margin: 0px 20px 0px 20px;
+                background-color: #FFF;
+                border-radius: 7px;
+                padding: 8px 25px 15px 25px;
+            }
+            .FAQ__header{
+                text-align: center;
+            }
+            .FAQ__question{
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid gray;
+            }
+            .FAQ__btn{
+                cursor: pointer;
+            }
+            .FAQ__answer{
+                display: none;
+            }
+            .FAQ__answer--hidden{
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HTML -->
+        <section id="FAQ">
+            <div class="FAQ__container">
+                <div class="FAQ__header">
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <!-- question/answer one -->
+                <div class="FAQ__question">
+                    <h3>What is the return policy?</h3>
+                    <h3 class="FAQ__btn">+</h3>
+                </div>
+                <div class="FAQ__answer">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque minus praesentium voluptatum. Consectetur optio iure, similique iste excepturi recusandae.
+                    </p>
+                </div>
+                <!-- question/answer two -->
+                <div class="FAQ__question">
+                    <h3>When will I receive my order?</h3>
+                    <h3 class="FAQ__btn">+</h3>
+                </div>
+                <div class="FAQ__answer">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque minus praesentium voluptatum. Consectetur optio iure, similique iste excepturi recusandae.
+                    </p>
+                </div>
+                <!-- question/answer three -->
+                <div class="FAQ__question">
+                    <h3>Where are you located?</h3>
+                    <h3 class="FAQ__btn">+</h3>
+                </div>
+                <div class="FAQ__answer">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. At cumque minus praesentium voluptatum. Consectetur optio iure, similique iste excepturi recusandae.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <script>
+            // JS
+            /* define upfront variables */
+            let answers = document.getElementsByClassName("FAQ__answer");
+            let faq_btns = document.getElementsByClassName("FAQ__btn");
+
+            /* loop throug all buttons in 'faq_btns' */
+            for (let i = 0; i < faq_btns.length; i++)
+            {
+                /* add a click-event to all of the buttons based on index value of 'faq_btns' */
+                faq_btns[i].addEventListener("click", function()
+            {
+                /* toggle the hidden class based on index value of 'faq_btns' */
+                answers[i].classList.toggle("FAQ__answer--hidden");
+
+                /* replace symbol with open/close depending on class applied to 'answer' */
+                this.innerText = answers[i].classList.contains('FAQ__answer--hidden') ? "-" : "+";
+            });
+            }
+        </script>
+    </body>
+</html>

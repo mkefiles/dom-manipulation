@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Project: Quote Generator</title>
+        <style>
+            /* CSS */
+            body{
+                margin: 0;
+                padding: 0;
+                background-image: url("library.jpg");
+                height: 800px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: gainsboro;
+            }
+            section{
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                
+            }
+            .header__container{
+                padding-top: 150px;
+                display: flex;
+                justify-content: center;
+            }
+            .intro{
+                background-color: slategrey;
+                color: white;
+                padding: 5px 15px 5px 15px;
+            }
+            .content__container{
+                margin-top: 20px;
+                padding: 20px 20px 20px 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+                background-color: white;
+                border-radius: 7px;
+                width: 70vw;
+            }
+        </style>        
+    </head>
+    <body>
+        <section>
+            <!-- Site Header -->
+            <div class="header__container">
+                <div class="intro">
+                    <h1>JavaScript Quote Generator</h1>
+                </div>
+            </div>
+        </section>
+        <section>
+            <!-- Site Quote-->
+            <div class="content__container">
+                <div class="quote__text">
+                    <p id="quote"></p>
+                </div>
+                <div class="quote__author">
+                    <h2 id="author"></h2>
+                </div>
+                <div class="quote__button">
+                    <button id="quote_btn">New Quote</button>
+                </div>
+            </div>
+        </section>
+        <script>
+            let quotes = {
+                1 : {
+                    "author": "Albert Einstein",
+                    "quote": "If you want to live a happy life, tie it to a goal, not to people or things"
+                },
+                2 : {
+                    "author": "Tony Stark",
+                    "quote": "Im A Huge Fan Of The Way You Lose Control And Turn Into An Enormous Green Rage Monster."
+                },
+                3 : {
+                    "author": "Jordan Belfort",
+                    "quote": "The only thing standing between you and your goal is the bullshit story you keep telling yourself as to why you can't achieve it."
+                },
+                4 : {
+                    "author": "Jordan Belfort",
+                    "quote": "If you want to be rich, never give up. People tend to give up. If you have persistence, you will come out ahead of most people. More importantly, you will learn. When you do something, you might fail. But that's not because you're a failure. It's because you have not learnt enough. Do it differently each time. One day, you will do it right. Failure is your friend."
+                }
+            }
+            let nextButton = document.getElementById("quote_btn");
+            let quoteField = document.getElementById("quote");
+            let authorField = document.getElementById("author");
+            let i = 1;
+
+            quoteField.innerText = quotes[1]['quote'];
+            authorField.innerText = quotes[1]['author'];
+
+            function newQuote(){
+                
+                i = i+1;
+                if(i == 5){
+                    i = 1;
+                }
+                quoteField.innerText = quotes[i]['quote'];
+                authorField.innerText = quotes[i]['author'];
+                console.log(i);
+
+            };            
+
+            nextButton.addEventListener("click", newQuote);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Stop Watch</title>
+        <style>
+            /* CSS */
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: rgb(143, 176, 199);
+            }
+            #stopWatch{
+                width: 100vw;
+                position: fixed;
+                top: 225px;
+                left: 0px;
+            }
+            .stopWatch__container{
+                width: 50%;
+                background-color: #FFF;
+                margin: 0 auto;
+                padding: 20px 30px 10px 30px;
+                border: 1px solid #000;
+                border-radius: 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .stopWatch__timer{
+                font-size: 2.2rem;
+                padding: 5px 5px 5px 5px;
+            }
+            .stopWatch__controls{
+                font-size: 1.5rem;
+                padding: 5px 5px 5px 5px;
+            }
+            .stopWatch__controls > span{
+                padding: 0px 5px 0px 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- HTML -->
+        <section id="stopWatch">
+            <div class="stopWatch__container">
+                <div class="stopWatch__timer">
+                    <span id="hours">00</span>
+                    <span>:</span>
+                    <span id="minutes">00</span>
+                    <span>:</span>
+                    <span id="seconds">00</span>
+                </div>
+                <div class="stopWatch__controls">
+                    <span id="play">&#9199;</span>
+                    <span id="reset">&#8634;</span>
+                </div>
+            </div>
+        </section>
+        <script>
+            let seconds = 0;
+            let ss = document.getElementById("seconds");
+            let minutes = 0;
+            let mm = document.getElementById("minutes");
+            let hours = 0;
+            let hh = document.getElementById("hours");
+            let timerActive = false;
+            let timer;
+            let playBtn = document.querySelector("#play");
+            let resetBtn = document.querySelector("#reset");
+
+            // play and pause click-event listener
+            playBtn.addEventListener("click", function(){
+                // toggle the timer as active/inactive (default state is inactive)
+                timerActive == false ? timerActive = true : timerActive = false;
+                if(timerActive == true){
+                    // clock iterator functionality
+                    timer = setInterval(function(){
+                        seconds = seconds + 1;
+                        if (seconds == 60){
+                            seconds = 0;
+                            minutes = minutes + 1;
+                        }
+                        if (minutes == 60){
+                            minutes = 0;
+                            hours = hours + 1;
+                        }
+                        if (hours == 60){
+                            hours = 0;
+                        }
+                        // set the HTML text; add a zero for single-digit numbers
+                        ss.innerHTML = seconds.toString().length == 1 ? seconds.toString().padStart(2, '0') : seconds.toString();
+                        mm.innerHTML = minutes.toString().length == 1 ? minutes.toString().padStart(2, '0') : minutes.toString();
+                        hh.innerHTML = hours.toString().length == 1 ? hours.toString().padStart(2, '0') : hours.toString();
+
+                    }, 1000);
+                }else{
+                    // reset the timer interval
+                    clearInterval(timer);
+                }
+            });
+            // reset the time and all values
+            resetBtn.addEventListener("click", function(){
+                clearInterval(timer);
+                timerActive = false;
+                seconds = 0;
+                minutes = 0;
+                hours = 0;
+                ss.innerHTML = "00";
+                mm.innerHTML = "00";
+                hh.innerHTML = "00";
+            });
+        </script>
+    </body>
+</html>
